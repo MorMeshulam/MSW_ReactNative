@@ -1,0 +1,4 @@
+cron:
+- description: "Update the events status every 4 hours"
+  url: /msw/forecast
+  schedule: every 4 hours

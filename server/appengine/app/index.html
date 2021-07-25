@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gorilla Ads</title>
+        <!-- <script src="./build/vast-player.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/vast-player@latest/dist/vast-player.min.js"></script>
+
+        <style>
+            #container {
+                /* width: 640px; height: 385px; */
+                /* border: 1px black solid; */
+                /* position: relative; */
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <button id="adsButton" onclick="window.player.startAd();">click</button>
+        <script>
+            var url = 'http://localhost:1111/adv/vast/?id=153518621';
+            var player;
+
+            (function(VASTPlayer) {
+                'use strict';
+
+                // VASTPlayer.vpaidSWFLocation = './build/vast-player--vpaid.swf';
+                player = new window.VASTPlayer(document.getElementById('container'));
+                window.container = document.getElementById('container');
+
+                player.once('AdStarted', function() {
+                });
+
+                [
+                    'AdLoaded',
+                    'AdStarted',
+                    'AdStopped',
+                    'AdSkipped',
+                    'AdSkippableStateChange',
+                    'AdSizeChange',
+                    'AdLinearChange',
+                    'AdDurationChange',
+                    'AdExpandedChange',
+                    'AdRemainingTimeChange',
+                    'AdVolumeChange',
+                    'AdImpression',
+                    'AdVideoStart',
+                    'AdVideoFirstQuartile',
+                    'AdVideoMidpoint',
+                    'AdVideoThirdQuartile',
+                    'AdVideoComplete',
+                    'AdClickThru',
+                    'AdInteraction',
+                    'AdUserAcceptInvitation',
+                    'AdUserMinimize',
+                    'AdUserClose',
+                    'AdPaused',
+                    'AdPlaying',
+                    'AdLog',
+                    'AdError'
+                ].forEach(function(type) {
+                    player.on(type, function() {
+                        var args = Array.prototype.slice.call(arguments);
+                        console.log.apply(console, ['EVENT: ' + type].concat(args));
+                    });
+                });
+
+                player.load(url).then(function() {
+                    window.player = player;
+                }).catch(function(reason) {
+                    console.error(reason);
+                });
+
+
+            }(window.VASTPlayer));
+      </script>
+    </body>
+</html>
